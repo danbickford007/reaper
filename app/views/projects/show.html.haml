@@ -3,7 +3,12 @@
 %p
   %b Name:
   = @project.name
-
+  %br
+  = "git@54.204.4.52:#{@project.url}"
+  %hr
+  = @project.branches
+  %hr
+  = @open
 = link_to 'Edit', edit_project_path(@project)
 \|
 = link_to 'Back', projects_path

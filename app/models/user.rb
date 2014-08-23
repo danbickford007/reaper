@@ -2,13 +2,13 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
 
 
-  before_create :check_exists?
+  before_create :available?
 
   def available?
-    exists = `ls / | grep #{username}`.present?
+    exists = `ls / | grep -Fx #{username}`.present?
     if exists 
       errors.add(:base, "Username already exists")
       false
