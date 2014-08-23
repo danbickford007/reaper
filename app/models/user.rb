@@ -7,11 +7,15 @@ class User < ActiveRecord::Base
 
   before_create :check_exists?
 
-  def check_exists?
-    unless File.directory?("/#{username}")
-      p FileUtils.mkdir_p("/#{username}")
-      p '?????????????????'
+  def available?
+    exists = `ls / | grep #{username}`.present?
+    if exists 
+      errors.add(:base, "Username already exists")
+      false
+    else
+      `sudo mkdir /#{username}`
     end
   end
+
 
 end
